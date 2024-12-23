@@ -2,4 +2,6 @@
 
 class Main:
     def __init__(self):
-        v = 1
+        print("Testing.")
+
+Main()

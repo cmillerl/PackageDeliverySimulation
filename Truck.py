@@ -1,16 +1,14 @@
 class Truck:
-    def __init__(self):
+
+    maxDistance = 140
+    maxSpeed = 18
+    maxPackages = 16
+
+    def __init__(self, currentDriver, location, packagesDelivered, packagesInTruck, truckStatus, totalMiles):
         
-        self.avgMPH = (18/60)
-        self.currentDriver = None
-        self.maxDistance = 140
-        self.maxPackages = 16
-        self.packagesDelivered = None
-        self.packagesInTruck = None
-        self.truckStatus = None
-        self.totalMiles = None
-        self.totalTrucks = 3
-        self.truckNumber = None
-
-    
-
+        self.currentDriver = currentDriver
+        self.location = location
+        self.packagesDelivered = packagesDelivered
+        self.packagesInTruck = packagesInTruck
+        self.truckStatus = truckStatus
+        self.totalMiles = totalMiles
