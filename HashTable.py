@@ -3,7 +3,7 @@ class HashTable: #This hash table will use chaining to handle collisions by allo
         self.table = [None] * size
 
     def getHash(self, key): #Hash function
-        return hash(key) % self.size  
+        return hash(key) % len(self.table)
     
     def insertItem(self, key, value): #Insertion function that uses simple chaining if an element already exists at index.
         index = self.getHash(key)
@@ -20,7 +20,7 @@ class HashTable: #This hash table will use chaining to handle collisions by allo
         self.table[index].append(keyValue)
         return True
     
-    def lookUp(self, key): #look-up function.
+    def lookUp(self, key): #Look-up function.
         for item in self.table[self.getHash(key)]:
             if item[0] == key:
                 return item[1]
