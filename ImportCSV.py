@@ -1,24 +1,31 @@
 import csv
 from HashTable import *
+from Distance import *
 
-#with open(#Input file path) as packageFile:
-    #csv_reader = csv.reader(packageFile)
-
-HashTable = HashTable()
+hTable = HashTable()
+dTable = distanceData
 
 def getPackageData():
 
-    for Package in csv_reader:
-        ID = Package[0]
-        address = Package[1]
-        city = Package[2]
-        state = Package[3]
-        zipCode = Package[4]
-        deliveryDeadline = Package[5]
-        weightKilos = Package[6]
-        specialNotes = Package[7]
+    with open("packageDataFile.csv") as packageFile: #Import the package data from a .csv file.
+        csvPackage = csv.reader(packageFile)
+
+    for row in csvPackage:
+        ID = row[0]
+        address = row[1]
+        city = row[2]
+        state = row[3]
+        zipCode = row[4]
+        deliveryDeadline = row[5]
+        weightKilos = row[6]
+        specialNotes = row[7]
         status = "At distribution center."
 
         Package = Package(ID, address, city, state, zipCode, deliveryDeadline, weightKilos, specialNotes, status)
 
-        HashTable.insertItem(Package)
+        hTable.insertItem(Package)
+
+def getDistanceData():
+    
+    with open("distanceDataFile.csv") as distanceFile: #Import the distance data from a .csv file.
+        csvDistance = csv.reader(distanceFile)
