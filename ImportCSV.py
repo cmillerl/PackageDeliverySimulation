@@ -1,24 +1,26 @@
 import csv
 from HashTable import *
 
-#with open(#Input file path) as packageFile:
-    #csv_reader = csv.reader(packageFile)
-
-HashTable = HashTable()
+ht = HashTable()
 
 def getPackageData():
+    
+    with open('csvFiles\packageData.csv', 'r') as packageData:
+        csv_reader = csv.reader(packageData, delimiter = ',')
 
-    for Package in csv_reader:
-        ID = Package[0]
-        address = Package[1]
-        city = Package[2]
-        state = Package[3]
-        zipCode = Package[4]
-        deliveryDeadline = Package[5]
-        weightKilos = Package[6]
-        specialNotes = Package[7]
+    for row in csv_reader:
+        ID = row[0]
+        address = row[1]
+        city = row[2]
+        state = row[3]
+        zipCode = row[4]
+        deliveryDeadline = row[5]
+        weightKilos = row[6]
+        specialNotes = row[7]
         status = "At distribution center."
 
-        Package = Package(ID, address, city, state, zipCode, deliveryDeadline, weightKilos, specialNotes, status)
+        newPackage = Package(ID, address, city, state, zipCode, deliveryDeadline, weightKilos, specialNotes, status)
 
-        HashTable.insertItem(Package)
+        ht.insertItem(newPackage.ID, newPackage)
+
+        print(ht)
