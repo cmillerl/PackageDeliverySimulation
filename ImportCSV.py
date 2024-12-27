@@ -1,12 +1,11 @@
 import csv
 from HashTable import *
+from Package import *
 
 ht = HashTable()
-
-def getPackageData():
     
-    with open('csvFiles\packageData.csv', 'r') as packageData:
-        csv_reader = csv.reader(packageData, delimiter = ',')
+with open('csvFiles\packageData.csv', 'r') as packageData:
+    csv_reader = csv.reader(packageData, delimiter = ',')
 
     for row in csv_reader:
         ID = row[0]
@@ -23,4 +22,8 @@ def getPackageData():
 
         ht.insertItem(newPackage.ID, newPackage)
 
-        print(ht)
+print("Hash Table test: ")
+for bucket in ht.table:
+    if bucket is not None:
+        for key, package in bucket:
+            print(package)

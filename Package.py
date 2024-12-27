@@ -10,22 +10,17 @@ class Package:
         self.address = address
         self.city = city
         self.state = state
-        self.zip = zipCode
+        self.zipCode = zipCode
         self.deliveryDeadline = deliveryDeadline
         self.weightKilos = weightKilos
         self.specialNotes = specialNotes
         self.status = status
 
-    def packageStatus():
-            
-        try:
-            testID = int(input("Enter a package ID to track its status: "))
-            packageExists = hTable.lookUp(testID)
-
-            if packageExists:
-             print("Package is currently: " + Package.status)
-            else:
-             print("Package with ID: " + testID + " not found.")
-        except ValueError:
-            print("Invalid package ID entered.")
-            #packageStatus()
+    def __str__(self):
+        return (f"Package ID: {self.ID}\n" 
+                f"Address: {self.address}, {self.city}, {self.state}, {self.zipCode}\n" 
+                f"Weight: {self.weightKilos}kg \n" 
+                f"Status: {self.status}\n"
+                f"Delivery Deadline: {self.deliveryDeadline}\n" 
+                f"Notes: {self.specialNotes}\n" 
+                "_____________________________________________________________________________\n")

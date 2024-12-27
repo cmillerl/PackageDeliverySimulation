@@ -1,6 +1,6 @@
 class Truck:
 
-    DRIVERS = ["John", "Ethan", "None"]
+    DRIVERS = ["John", "Ethan"]
     MAX_DISTANCE = 140
     MAX_SPEED = 18
     MAX_PACKAGES = 16

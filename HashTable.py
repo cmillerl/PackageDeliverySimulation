@@ -21,7 +21,7 @@ class HashTable: #This hash table will use chaining to handle collisions by allo
         return True
     
     def lookUp(self, key): #Look-up function.
-        for item in self.table[self.getHash(key)]:
+        for item in self.table[self.getHash(key)] or []:
             if item[0] == key:
                 return item[1]
             else:
