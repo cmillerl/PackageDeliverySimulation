@@ -1,6 +1,6 @@
 from HashTable import *
 
-hTable = HashTable()
+ht = HashTable()
 
 class Package:
 
