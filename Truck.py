@@ -3,11 +3,10 @@ class Truck:
     MAX_DISTANCE_MILES = 140
     AVG_SPEED = 18
     MAX_PACKAGES = 16
-    LOCATION = ["At distribution center", "En route", "Returning"]
-    STATUS = ["Waiting for driver or packages", "Delivering packages", "Done for the day"]
+    STATUS = ["At distribution center", "En route", "Returning"]
 
-    def __init__(self, packagesInTruck, startTime, truckNumber):   
-        self.location = self.LOCATION[0]
+    def __init__(self, packagesInTruck, startTime, truckNumber, location):   
+        self.location = location
         self.maxMiles = self.MAX_DISTANCE_MILES
         self.maxPackages = self.MAX_PACKAGES
         self.packagesDelivered = 0

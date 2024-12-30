@@ -19,16 +19,19 @@ class Main():
 
         import_csv.fillPackageData()
         #method_class.printSortedPackageTable()
+        #Test to make sure data is imported correctly.
 
         import_csv.fillDistanceData()
         #print(distance_Table)
+        #Test to make sure data is imported correctly.
 
         import_csv.fillAddressData()
         #print(address_Table)
+        #Test to make sure data is imported correctly.
 
-        truckOne = Truck([], None, "Truck One")
-        truckTwo = Truck([], None, "Truck Two")
-        truckThree = Truck([], None, "Truck Three")
+        truckOne = Truck([1,12,13,14,15,16,17,19,20,21,28,29,33,34,40], None, "Truck One", startAddress)
+        truckTwo = Truck([3,6,11,18,22,23,24,25,26,31,32,36], None, "Truck Two", startAddress)
+        truckThree = Truck([2,4,5,7,8,9,10,27,30,35,37,38,39], None, "Truck Three", startAddress)
 
         print(truckOne)
 
