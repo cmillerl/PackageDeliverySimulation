@@ -1,7 +1,3 @@
-from HashTable import *
-
-ht = HashTable()
-
 class Package:
 
     def __init__(self, ID, address, city, state, zipCode, deliveryDeadline, weightKilos, specialNotes, status):
