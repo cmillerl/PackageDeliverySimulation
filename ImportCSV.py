@@ -33,16 +33,32 @@ class ImportCSV():
 
         with open('csvFiles\distanceData.csv', 'r') as distanceData:
             csv_reader = csv.reader(distanceData, delimiter = ',')
-            for row in csv_reader:
-                distance_Table.append(row)
+            distance_Table = list(csv_reader)
+
+            try:
                 for i in range(len(distance_Table)):
-                    for j in range(len(distance_Table)):
-                        distance_Table[i][j] = distance_Table[j][i]
+                    for j in range(len(distance_Table[i])):
+                        if distance_Table[i][j]:
+                           distance_Table[i][j] = float(distance_Table[i][j])
+            except ValueError:
+                pass
+            
+            try:
+                for i in range(len(distance_Table)):
+                    for j in range(i + 1, len(distance_Table)):
+                        if distance_Table[i][j] and not distance_Table [j][i]:
+                            distance_Table[j][i] = distance_Table [i][j]
+            except ValueError:
+                pass
 
     def fillAddressData(self):
         global address_Table
 
-        with open('csvFiles/addressData.csv', 'r') as addressData:
+        with open('csvFiles/distanceData.csv', 'r') as addressData:
             csv_reader = csv.reader(addressData, delimiter = ',')
             for row in csv_reader:
-                address_Table.append(row[2])
+                try:
+                    if address_Table[0] != "":
+                        address_Table.append(row[0])
+                except ValueError:
+                    pass
