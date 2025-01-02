@@ -20,12 +20,14 @@ class HashTable: #This hash table will use chaining to handle collisions by allo
         self.table[index].append(keyValue)
         return True
     
-    def lookUp(self, key): #Look-up function.
-        for item in self.table[self.getHash(key)] or []:
-            if item[0] == key:
-                return item[1]
-            else:
-                return None
+    def lookUp(self, key):
+        index = self.getHash(key)
+        if self.table[index] is not None:
+            for item in self.table[index]:
+                if item[0] == key:
+                    return item[1]
+        else:
+            return None
             
     def deleteItem(self, key): #Delete function.
         index = self.getHash(key)
