@@ -18,9 +18,26 @@ class Main():
             print("WGUPS Routing Program\n" + 
                   "_____________________\n")
             
+            #Load all data into the correct arrays.
+            print("Data loading in progress...")
             method_class.loadAllData()
+            print("Data loaded successfully.\n")
 
-            distance_class.printAddressTable()
+            #distance_class.printAddressTable()
+
+            #Load all trucks with packages.
+            method_class.loadAllTrucks()
+            print("Trucks loaded successfully.\n")
+
+            #for index, Truck in enumerate(method_class.trucks, 1):
+                #print(f"\nTruck {index} Details:")
+                #print("-----------------")
+                #print(Truck)
+                #print("\n")
+
+            method_class.startDeliveries()
+
+            
 
         except ValueError:
             print("Error initializing program")

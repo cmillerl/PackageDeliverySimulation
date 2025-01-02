@@ -30,12 +30,10 @@ class Distance:
 
     #Part of the greedy algorithm to find the nearest package.
     def findNearest(self, currentAddress, undeliveredPackages):
-        validPackages = [package for package in undeliveredPackages if package is not None]
-
-        if not validPackages:
+        if not undeliveredPackages:
             return None
         
-        return min(validPackages, key = lambda package: self.getDistance(currentAddress, package.address))
+        return min(undeliveredPackages, key = lambda package: self.getDistance(currentAddress, package.address))
 
     #Part of the greedy algorithm to find the optimal route.
     def optimalRoute(self, truck):
@@ -55,6 +53,7 @@ class Distance:
                 route.append(nearestLocation.address)
                 currentAddress = nearestLocation.address
                 undelivered.remove(nearestLocation)
+                nearestLocation.status = "Delivered"
 
         #Return to the hub and add the distance to the total miles.
         distanceToHub = self.getDistance(currentAddress, self.startAddress)
@@ -67,7 +66,7 @@ class Distance:
         print(f"Total Miles: {totalDistanceMiles}")
 
     def printAddressTable(self):
-        print("\nAll Delivery Addresses:")
+        print("All Delivery Addresses")
         print("----------------------")
         for index, address in enumerate(self.addressTable):
             print(f"{index + 1}. {address}")

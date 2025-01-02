@@ -9,6 +9,7 @@ class Methods():
     def __init__(self):
         self.distance_class = Distance()
         self.trucks = []
+        self.total_miles = 0
 
     def printSortedPackageTable(self):
         print("Package Data Results")
@@ -43,28 +44,36 @@ class Methods():
     def loadAllTrucks(self):
         truckOne = Truck([], "8:00:00 AM", "Truck One", "4001 South 700 East")
         truckTwo = Truck([], "9:05:00 AM", "Truck Two", "4001 South 700 East")
-        truckThree = Truck([], "10:00::00 AM", "Truck Three", "4001 South 700 East")
-
-        truckOne.packagesInTruck = [hash_table.lookUp(str(id)) for id in [1,12,13,14,15,16,17,19,20,21,28,29,33,34,40]]
-        truckTwo.packagesInTruck = [hash_table.lookUp(str(id)) for id in [3,6,11,18,22,23,24,25,26,31,32,36]]
-        truckThree.packagesInTruck = [hash_table.lookUp(str(id)) for id in [2,4,5,7,8,9,10,27,30,35,37,38,39]]
-
+        truckThree = Truck([], "10:00:00 AM", "Truck Three", "4001 South 700 East")
+    
+        package_lists = {
+            truckOne: [13,14,15,16,19,20,1,21,29,30,31,34,37],
+            truckTwo: [3,6,18,25,26,28,32,36,38,40],
+            truckThree: [2,4,5,7,8,9,10,11,12,17,22,23,24,27,33,35,39]}
+    
+        for truck, package_ids in package_lists.items():
+            truck.packagesInTruck = []
+            for pid in package_ids:
+                package = hash_table.lookUp(str(pid))
+                if package:
+                    truck.packagesInTruck.append(package)
+    
         self.trucks = [truckOne, truckTwo, truckThree]
-
-    def startDay(self):
-        if not self.trucks:
-            print("Trucks not loaded.")
-            return False
-        
-        totalMiles = 0
-        for truck in self.trucks:
-            route, miles = self.distance_class.optimalRoute(truck)
-            totalMiles += miles
-
-            print(f"Truck Number: {truck.truckNumber}")
-            print(f"Start Time: {truck.startTime}")
-            print(f"Route: {'-> '.join(route)}")
-            print(f"Total Miles: {miles:.2f}")
-            print(f"Packages Delivered: {truck.packagesDelivered}")
+        return self.trucks
+    
+    def startDeliveries(self):
+        try:
+            for truck in self.trucks:
+                print(f"\nCalculating route for {truck.truckNumber}")
+                self.distance_class.optimalRoute(truck)
+                self.total_miles += truck.totalMiles
+                
+            print("\nDelivery Summary")
             print("-" * 20)
-            print(f"Total Miles for all trucks: {totalMiles:.2f}")
+            print(f"Total Miles Traveled: {self.total_miles:.1f}")
+            print(f"Total Packages Delivered: {sum(truck.packagesDelivered for truck in self.trucks)}")
+            
+            return True
+        except ValueError:
+            print("Error starting deliveries.")
+            return False

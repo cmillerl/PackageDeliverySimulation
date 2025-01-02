@@ -16,7 +16,7 @@ class ImportCSV():
             
             try:
                 for row in csv_reader:
-                    ID = row[0]
+                    ID = row[0].strip().replace('ï»¿', '')
                     address = row[1]
                     city = row[2]
                     state = row[3]
@@ -24,10 +24,11 @@ class ImportCSV():
                     deliveryDeadline = row[5]
                     weightKilos = row[6]
                     specialNotes = row[7]
-                    status = "At distribution center."
+                    status = "At WGU Hub."
 
                     newPackage = Package(ID, address, city, state, zipCode, deliveryDeadline, weightKilos, specialNotes, status)
-                    hash_table.insertItem(newPackage.ID, newPackage)
+                    hash_table.insertItem(ID, newPackage)
+                    #print(f"Package {ID} added to the hash table.")
             except ValueError:
                 print("Error loading package data.")
 
