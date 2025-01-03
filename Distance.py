@@ -1,5 +1,6 @@
 from ImportCSV import *
 from Truck import *
+from Package import *
 
 import_csv = ImportCSV()
 
@@ -62,6 +63,7 @@ class Distance:
                 currentAddress = nearestLocation.address
                 nearestLocation.deliveryTime = deliveryTime
                 nearestLocation.status = "Delivered"
+                self.deliveredTime = currentTime
                 undelivered.remove(nearestLocation)
                 
             if nearestLocation.deliveryDeadline != "EOD":
@@ -91,8 +93,8 @@ class Distance:
         
         if self.deadlinePackages > 0:
             print(f"Total Deadline Packages: {self.deadlinePackages}")
-            print(f"Packages on time: {self.onTimePackages}")
-            print(f"Packages missed time: {self.offTimePackages}")
+            print(f"Packages delivered by deadline: {self.onTimePackages}")
+            print(f"Packages missed delivery deadline: {self.offTimePackages}")
 
         print(f"Route: {route}")
         print(f"Total Miles: {totalDistanceMiles:.2f}")

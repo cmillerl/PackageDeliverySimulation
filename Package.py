@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 class Package:
 
     def __init__(self, ID, address, city, state, zipCode, deliveryDeadline, weightKilos, specialNotes, status):
@@ -8,6 +10,7 @@ class Package:
         self.state = state
         self.zipCode = zipCode
         self.deliveryDeadline = deliveryDeadline
+        self.deliveryTime = None
         self.weightKilos = weightKilos
         self.specialNotes = specialNotes
         self.status = status
@@ -19,4 +22,5 @@ class Package:
                 f"Status: {self.status}\n"
                 f"Delivery Deadline: {self.deliveryDeadline}\n" 
                 f"Notes: {self.specialNotes}\n" 
+                f"Delivery Time: {self.deliveryTime.strftime('%I:%M:%S %p')}\n"
                 "_____________________________________________________________________________\n")

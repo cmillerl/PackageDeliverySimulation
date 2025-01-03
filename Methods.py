@@ -44,7 +44,7 @@ class Methods():
     def loadAllTrucks(self):
         truckOne = Truck([], "8:00:00 AM", "Truck One", "4001 South 700 East")
         truckTwo = Truck([], "9:05:00 AM", "Truck Two", "4001 South 700 East")
-        truckThree = Truck([], "10:00:00 AM", "Truck Three", "4001 South 700 East")
+        truckThree = Truck([], "10:20:00 AM", "Truck Three", "4001 South 700 East")
     
         package_lists = {
             truckOne: [13,14,15,16,19,20,1,21,29,30,31,34,37],
@@ -105,3 +105,49 @@ class Methods():
             print("-----------------")
             print(Truck)
             print("\n")
+
+    def menu(self):
+        print("Welcome to the WGUPS Routing Program.")
+        print("-------------------------------------")
+        print("Please select an option based on what you want to do using the corresponding number.")
+        print("1. Print all package data sorted.")
+        print("2. pass.")
+        print("3. Look up a package by ID.")
+        print("4. Exit the program.")
+            
+        try:
+            choice = int(input("Enter a valid number: "))
+
+            if choice == 1:
+                self.printSortedPackageTable()
+            elif choice == 2:
+                pass
+            elif choice == 3:
+                try:
+                    packageID = int(input("Enter the package ID you want to look up (1-40): "))
+                    package = hash_table.lookUp(str(packageID))
+                    if package:
+                        print(package)
+                        try:
+                            choiceTwo = str(input("Would you like to lookup another package? (Y/N): "))
+                            if choiceTwo == "Y" or choiceTwo == "y":
+                                self.menu()
+                            else:
+                                print("Exiting program.")
+                                exit()
+                        except ValueError:
+                            print("Invalid input. Exiting program.")
+                            exit()
+                    else:
+                        print("Package not found.")
+                except:
+                    print("Error looking up package.")
+            elif choice == 4:
+                print("Exiting program.")
+                exit()
+            else:
+                print("Invalid input. Exiting program.")
+                exit()
+
+        except ValueError:
+            print("Please enter a valid number between 1-4.")

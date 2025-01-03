@@ -14,23 +14,21 @@ class Main():
     def __init__(self):
 
         try:
-
-            print("WGUPS Routing Program\n" + 
-                  "_____________________\n")
-            
             #Load all data into the correct arrays.
             method_class.loadAllData()
             print("Data loaded successfully.\n")
 
             #Load all trucks with packages.
             method_class.loadAllTrucks()
-            print("Trucks loaded successfully.")
+            print("Trucks loaded successfully.\n")
 
-            #Start the truck deliveries.
+            #Start delivery process.
             method_class.startDeliveries()
 
-            
+            #Main menu.
+            method_class.menu()
 
         except ValueError:
             print("Error initializing program (Main.__init__())")
+
 Main()
