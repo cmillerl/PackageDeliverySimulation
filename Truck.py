@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 class Truck:
 
     MAX_DISTANCE_MILES = 140
@@ -11,10 +13,16 @@ class Truck:
         self.maxPackages = self.MAX_PACKAGES
         self.packagesDelivered = 0
         self.packagesInTruck = packagesInTruck
-        self.startTime = startTime
+        self.returnTime = None
+        self.startTime = datetime.strptime(startTime, "%I:%M:%S %p")
         self.totalMiles = 0
+        self.totalTime = 0
         self.truckNumber = truckNumber
         self.truckStatus = self.STATUS[0]
+
+    def calculateDeliveryTime(self, distance):
+        hours = distance / self.AVG_SPEED
+        return timedelta(hours = hours)
 
     def __str__(self):
         try:

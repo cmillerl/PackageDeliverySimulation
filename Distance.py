@@ -8,6 +8,9 @@ class Distance:
         self.addressTable = address_Table
         self.distanceTable = distance_Table
         self.startAddress =  "4001 South 700 East" #WGU HUB
+        self.onTimePackages = 0
+        self.offTimePackages = 0
+        self.deadlinePackages = 0
 
     def cleanAddress(self, address):
         return address.replace('\n', ' ').split('(')[0].strip()
@@ -38,9 +41,11 @@ class Distance:
     #Part of the greedy algorithm to find the optimal route.
     def optimalRoute(self, truck):
         undelivered = truck.packagesInTruck.copy()
+        undeliveredTwo = len(undelivered.copy())
         route = [self.startAddress]
         currentAddress = self.startAddress
         totalDistanceMiles = 0
+        currentTime = truck.startTime
 
         #While there are undelivered packages, find the nearest undelivered package and drive to that location.
         while undelivered:
@@ -48,22 +53,50 @@ class Distance:
 
             if nearestLocation:
                 distance = self.getDistance(currentAddress, nearestLocation.address)
+                travelTime = timedelta(hours = distance / truck.AVG_SPEED)
+                deliveryTime = currentTime + travelTime
+                currentTime = deliveryTime
                 totalDistanceMiles += distance
                 truck.packagesDelivered += 1
                 route.append(nearestLocation.address)
                 currentAddress = nearestLocation.address
-                undelivered.remove(nearestLocation)
+                nearestLocation.deliveryTime = deliveryTime
                 nearestLocation.status = "Delivered"
+                undelivered.remove(nearestLocation)
+                
+            if nearestLocation.deliveryDeadline != "EOD":
+                self.deadlinePackages += 1
+                try:
+                    deliveryDeadline = datetime.strptime(nearestLocation.deliveryDeadline, "%I:%M %p")
+                    deadlineTime = deliveryDeadline.time()
+
+                    if deliveryTime.time() <= deadlineTime:
+                        self.onTimePackages += 1
+                    else:
+                        self.offTimePackages += 1
+                except ValueError:
+                    print(f"Error calculating delivery time for package {nearestLocation.ID} (Distance.optimalRoute())")
 
         #Return to the hub and add the distance to the total miles.
         distanceToHub = self.getDistance(currentAddress, self.startAddress)
+        returnTime = timedelta(hours = distanceToHub / truck.AVG_SPEED)
         totalDistanceMiles += distanceToHub
+        currentTime += returnTime
         route.append(self.startAddress)
 
         truck.totalMiles = totalDistanceMiles
+        truck.returnTime = currentTime
         truck.route = route
+        print(f"Packackages Delivered: {undeliveredTwo}")
+        
+        if self.deadlinePackages > 0:
+            print(f"Total Deadline Packages: {self.deadlinePackages}")
+            print(f"Packages on time: {self.onTimePackages}")
+            print(f"Packages missed time: {self.offTimePackages}")
+
         print(f"Route: {route}")
-        print(f"Total Miles: {totalDistanceMiles}")
+        print(f"Total Miles: {totalDistanceMiles:.2f}")
+        print(f"Return Time: {currentTime.strftime('%I:%M:%S %p')}")
 
     def printAddressTable(self):
         print("All Delivery Addresses")

@@ -48,8 +48,8 @@ class Methods():
     
         package_lists = {
             truckOne: [13,14,15,16,19,20,1,21,29,30,31,34,37],
-            truckTwo: [3,6,18,25,26,28,32,36,38,40],
-            truckThree: [2,4,5,7,8,9,10,11,12,17,22,23,24,27,33,35,39]}
+            truckTwo: [3,6,18,25,26,28,32,36,38,39,40],
+            truckThree: [2,4,5,7,8,9,10,11,12,17,22,23,24,27,33,35]}
     
         for truck, package_ids in package_lists.items():
             truck.packagesInTruck = []
@@ -63,21 +63,45 @@ class Methods():
     
     def startDeliveries(self):
         try:
+            firstTime = datetime.strptime("8:00:00 AM", "%I:%M:%S %p")
+
             for truck in self.trucks:
-                print(f"Calculating route for {truck.truckNumber}\n")
+                print("\n" + truck.truckNumber)
+                print("----------")
+                print(f"Depature Time: {truck.startTime.strftime('%I:%M:%S %p')}")
                 self.distance_class.optimalRoute(truck)
                 self.total_miles += truck.totalMiles
+
+            lastTime = max(truck.returnTime for truck in self.trucks)
+            totalTime = lastTime - firstTime
+            hours = int(totalTime.total_seconds() // 3600)
+            minutes = int((totalTime.total_seconds() % 3600) // 60)
+            seconds = int(totalTime.total_seconds() % 60)
+
                 
-            print("Delivery Summary")
-            print("----------------")
+            print("\nDelivery Day Summary")
+            print("--------------------")
             print(f"Total Packages Delivered: {sum(truck.packagesDelivered for truck in self.trucks)} out of 40.")
+            print(f"Total Time Taken: {hours} hours {minutes} minutes {seconds} seconds.")
+
+            if self.distance_class.onTimePackages == self.distance_class.deadlinePackages:
+                print("All packages delivered on time.")
+            else:
+                print(f"{self.distance_class.offTimePackages} packages delivered late.")
 
             if self.total_miles <= 140:
-                print(f"All packages delivered in {self.total_miles:.1f} miles.")
+                print(f"All packages delivered in {self.total_miles:.2f} miles.")
             else:  
-                print(f"Not all packages delivered under the 140 mile limit in {self.total_miles:.1f} miles.")
+                print(f"Not all packages delivered under the 140 mile limit instead {self.total_miles:.2f} miles taken.")
 
             return True
         except ValueError:
             print("Error starting deliveries. (Methods.startDeliveries())")
             return False
+        
+    def printTrucks(self):
+        for index, Truck in enumerate(self.trucks, 1):
+            print(f"Truck {index} Details\n")
+            print("-----------------")
+            print(Truck)
+            print("\n")

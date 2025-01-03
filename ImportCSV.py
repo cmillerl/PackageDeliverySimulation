@@ -55,5 +55,5 @@ class ImportCSV():
                     if row:
                         address = row[1].strip()
                         address_Table.append(address)
-            except Exception as e:
-                print(f"Error in fillAddressData: {e} (ImportCSV.fillAddressData())")
+            except ValueError:
+                print("Error loading address data. (ImportCSV.fillAddressData())")
