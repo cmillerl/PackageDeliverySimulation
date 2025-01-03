@@ -25,7 +25,7 @@ class Distance:
                 return float(self.distanceTable[indexTwo][indexOne])
             
         except (ValueError, IndexError) as e:
-            print(f"Error finding the distance between {addressOne} and {addressTwo}")
+            print(f"Error finding the distance between {addressOne} and {addressTwo} (Distance.getDistance())")
             return float('inf')
 
     #Part of the greedy algorithm to find the nearest package.

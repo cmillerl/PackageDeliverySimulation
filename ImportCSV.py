@@ -30,7 +30,7 @@ class ImportCSV():
                     hash_table.insertItem(ID, newPackage)
                     #print(f"Package {ID} added to the hash table.")
             except ValueError:
-                print("Error loading package data.")
+                print("Error loading package data. (ImportCSV.fillPackageData())")
 
     def fillDistanceData(self):
         global distance_Table
@@ -43,7 +43,7 @@ class ImportCSV():
                     if cleanedRow:
                         distance_Table.append(cleanedRow)
             except ValueError:
-                print("Error loading distance data.")
+                print("Error loading distance data. (ImportCSV.fillDistanceData())")
             
     def fillAddressData(self):
         global address_Table
@@ -56,4 +56,4 @@ class ImportCSV():
                         address = row[1].strip()
                         address_Table.append(address)
             except Exception as e:
-                print(f"Error in fillAddressData: {e}")
+                print(f"Error in fillAddressData: {e} (ImportCSV.fillAddressData())")

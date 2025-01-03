@@ -64,16 +64,20 @@ class Methods():
     def startDeliveries(self):
         try:
             for truck in self.trucks:
-                print(f"\nCalculating route for {truck.truckNumber}")
+                print(f"Calculating route for {truck.truckNumber}\n")
                 self.distance_class.optimalRoute(truck)
                 self.total_miles += truck.totalMiles
                 
-            print("\nDelivery Summary")
-            print("-" * 20)
-            print(f"Total Miles Traveled: {self.total_miles:.1f}")
-            print(f"Total Packages Delivered: {sum(truck.packagesDelivered for truck in self.trucks)}")
-            
+            print("Delivery Summary")
+            print("----------------")
+            print(f"Total Packages Delivered: {sum(truck.packagesDelivered for truck in self.trucks)} out of 40.")
+
+            if self.total_miles <= 140:
+                print(f"All packages delivered in {self.total_miles:.1f} miles.")
+            else:  
+                print(f"Not all packages delivered under the 140 mile limit in {self.total_miles:.1f} miles.")
+
             return True
         except ValueError:
-            print("Error starting deliveries.")
+            print("Error starting deliveries. (Methods.startDeliveries())")
             return False

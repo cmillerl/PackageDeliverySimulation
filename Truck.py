@@ -25,4 +25,4 @@ class Truck:
                     f"Current Location: {self.location}\n"
                     f"Start Time: {self.startTime}")
         except AttributeError:
-            return "Error printing truck information."
+            return "Error printing truck information. (Truck.__str__())"

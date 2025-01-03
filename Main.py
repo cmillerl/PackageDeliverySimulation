@@ -40,5 +40,5 @@ class Main():
             
 
         except ValueError:
-            print("Error initializing program")
+            print("Error initializing program (Main.__init__())")
 Main()
