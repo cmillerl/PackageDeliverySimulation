@@ -118,6 +118,20 @@ class Methods():
             print(Truck)
             print("\n")
 
+    def lookupPackage(self):
+        try:
+            packageID = int(input("Enter the package ID you want to look up (1-40): "))
+            package = hash_table.lookUp(str(packageID))
+
+            if package:
+                print(package)
+            else:
+                print(f"Package {packageID} not found.")
+
+        except ValueError:
+            print("Invalid input. Exiting program.")
+            exit()
+
     #Main menu for user interaction.
     def menu(self):
         print("Welcome to the WGUPS Routing Program.")
@@ -129,43 +143,21 @@ class Methods():
         print("4. Exit the program.")
             
         try:
-            choice = int(input("Enter a valid number: "))
+            choice = int(input("Enter a valid number (1-4): "))
 
             if choice == 1:
-                try:
-                    packageID = int(input("Enter the package ID you want to look up (1-40): "))
-                    package = hash_table.lookUp(str(packageID))
-                    if package:
-                        print(package)
-                        choiceTwo = str(input("Do you want to return to the main menu? (Y/N): "))
-                        if choiceTwo == "Y" or choiceTwo == "y":
-                            self.menu()
-                        elif choiceTwo == "N" or choiceTwo == "n":
-                            print("Exiting program.")
-                            exit()
-                        else:
-                            print("Exiting program.")
-                            exit()
-                    else:
-                        print("Package not found, returning to main menu.")
-                        self.menu()
-                except:
-                    print("Invalid input. Exiting program.")
-                    exit()
-
+                self.lookupPackage()
             elif choice == 2:
                 self.printSortedPackageTable()
-
             elif choice == 3:
                 self.printTrucks()
-
             elif choice == 4:
                 print("Exiting program.")
                 exit()
             else:
-                print("Invalid input. Exiting program.")
-                exit()
+                print("Invalid input. Returning to main menu.")
+                self.menu()
 
         except ValueError:
-            print("Invalid input. Exiting program.")
-            exit()
+            print("Invalid input. Returning to main menu.")
+            self.menu()

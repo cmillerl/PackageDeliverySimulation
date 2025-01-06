@@ -29,9 +29,10 @@ class Truck:
         try:
             packageIDs = [str(package.ID) for package in self.packagesInTruck]
             packageList = ', '.join(packageIDs) if packageIDs else "No packages in truck."
+            startTimeFormatted = self.startTime.strftime("%H:%M:%S %p")
             return(f"Truck Number: {self.truckNumber}\n"
                     f"Packages in Truck: {packageList}\n" 
                     f"Current Location: {self.location}\n"
-                    f"Start Time: {self.startTime}")
+                    f"Start Time: {startTimeFormatted}")
         except AttributeError:
             return "Error printing truck information. (Truck.__str__())"
