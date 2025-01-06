@@ -15,17 +15,20 @@ class Main():
 
         try:
             #Load all data into the correct arrays.
+            #O(N)
             method_class.loadAllData()
             print("Data loaded successfully.\n")
 
             #Load all trucks with packages.
+            #O(N)
             method_class.loadAllTrucks()
-            print("Trucks loaded successfully.\n")
+            print("Trucks loaded successfully.")
 
             #Start delivery process.
+            #O(N^2)
             method_class.startDeliveries()
 
-            #Main menu.
+            #Main menu for user interaction.
             method_class.menu()
 
         except ValueError:
