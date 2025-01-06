@@ -20,6 +20,7 @@ class Truck:
         self.truckNumber = truckNumber
         self.truckStatus = self.STATUS[0]
 
+    #Calculates the time it takes to deliver a package.
     def calculateDeliveryTime(self, distance):
         hours = distance / self.AVG_SPEED
         return timedelta(hours = hours)

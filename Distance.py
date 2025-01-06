@@ -13,9 +13,13 @@ class Distance:
         self.offTimePackages = 0
         self.deadlinePackages = 0
 
+    #Removes unnecessary characters from the address.
+    #O(1)
     def cleanAddress(self, address):
         return address.replace('\n', ' ').split('(')[0].strip()
 
+    #Returns the distance between two addresses.
+    #O(N)
     def getDistance(self, addressOne, addressTwo):
         try:
             addressOne = self.cleanAddress(addressOne)
@@ -33,6 +37,7 @@ class Distance:
             return float('inf')
 
     #Part of the greedy algorithm to find the nearest package.
+    #O(N)
     def findNearest(self, currentAddress, undeliveredPackages):
         if not undeliveredPackages:
             return None
@@ -40,6 +45,7 @@ class Distance:
         return min(undeliveredPackages, key = lambda package: self.getDistance(currentAddress, package.address))
 
     #Part of the greedy algorithm to find the optimal route.
+    #O(N^2)
     def optimalRoute(self, truck):
         undelivered = truck.packagesInTruck.copy()
         undeliveredTwo = len(undelivered.copy())
@@ -91,6 +97,7 @@ class Distance:
         truck.route = route
         print(f"Packackages Delivered: {undeliveredTwo}")
         
+        #Prints the amount of packages delivered on time, missed deadlines, the route, total miles, and return time.
         if self.deadlinePackages > 0:
             print(f"Total Deadline Packages: {self.deadlinePackages}")
             print(f"Packages delivered by deadline: {self.onTimePackages}")
@@ -100,6 +107,8 @@ class Distance:
         print(f"Total Miles: {totalDistanceMiles:.2f}")
         print(f"Return Time: {currentTime.strftime('%I:%M:%S %p')}")
 
+    #Prints the address table.
+    #O(N)
     def printAddressTable(self):
         print("All Delivery Addresses")
         print("----------------------")

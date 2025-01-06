@@ -10,6 +10,8 @@ class ImportCSV():
     def __init__(self):
         pass
 
+    #Fills the hash table with package data.
+    #O(N)
     def fillPackageData(self):
         with open('csvFiles\packageData.csv', 'r') as packageData:
             csv_reader = csv.reader(packageData, delimiter = ',')
@@ -28,10 +30,12 @@ class ImportCSV():
 
                     newPackage = Package(ID, address, city, state, zipCode, deliveryDeadline, weightKilos, specialNotes, status)
                     hash_table.insertItem(ID, newPackage)
-                    #print(f"Package {ID} added to the hash table.")
+                    #print(f"Package {ID} added to the hash table.") for debugging purposes.
             except ValueError:
                 print("Error loading package data. (ImportCSV.fillPackageData())")
 
+    #Fills the distance table with distance data.
+    #O(N)
     def fillDistanceData(self):
         global distance_Table
         with open('csvFiles\distanceData.csv', 'r') as distanceData:
@@ -45,6 +49,8 @@ class ImportCSV():
             except ValueError:
                 print("Error loading distance data. (ImportCSV.fillDistanceData())")
             
+    #Fills the address table with address data.
+    #O(N)
     def fillAddressData(self):
         global address_Table
         with open('csvFiles/addressData.csv', 'r') as addressData:

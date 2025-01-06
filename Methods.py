@@ -11,6 +11,8 @@ class Methods():
         self.trucks = []
         self.total_miles = 0
 
+    #Sorts the package table in order of ID from least to greatest and prints the results.
+    #O(n log n)
     def printSortedPackageTable(self):
         print("Package Data Results")
         print("____________________\n")
@@ -33,14 +35,20 @@ class Methods():
 
     def loadAllData(self):
         #Load package data.
+        #O(N)
         import_csv.fillPackageData()
 
         #Load distance data.
+        #O(N)
         import_csv.fillDistanceData()
 
         #Load address data.
+        #O(N)
         import_csv.fillAddressData()
 
+
+    #Load trucks one, two, and three with the respective data.
+    #O(N)
     def loadAllTrucks(self):
         truckOne = Truck([], "8:00:00 AM", "Truck One", "4001 South 700 East")
         truckTwo = Truck([], "9:05:00 AM", "Truck Two", "4001 South 700 East")
@@ -61,6 +69,8 @@ class Methods():
         self.trucks = [truckOne, truckTwo, truckThree]
         return self.trucks
     
+    #Starts the delivery process for all trucks beginning at 8:00:00 AM.
+    #O(N^2)
     def startDeliveries(self):
         try:
             firstTime = datetime.strptime("8:00:00 AM", "%I:%M:%S %p")
@@ -90,15 +100,17 @@ class Methods():
                 print(f"{self.distance_class.offTimePackages} packages delivered late.")
 
             if self.total_miles <= 140:
-                print(f"All packages delivered in {self.total_miles:.2f} miles.")
+                print(f"All packages delivered in {self.total_miles:.2f} miles.\n")
             else:  
-                print(f"Not all packages delivered under the 140 mile limit instead {self.total_miles:.2f} miles taken.")
+                print(f"Not all packages delivered under the 140 mile limit instead {self.total_miles:.2f} miles taken.\n")
 
             return True
         except ValueError:
             print("Error starting deliveries. (Methods.startDeliveries())")
             return False
         
+    #Prints trucks, useful for debugging.
+    #O(N)    
     def printTrucks(self):
         for index, Truck in enumerate(self.trucks, 1):
             print(f"Truck {index} Details\n")
@@ -106,42 +118,47 @@ class Methods():
             print(Truck)
             print("\n")
 
+    #Main menu for user interaction.
     def menu(self):
         print("Welcome to the WGUPS Routing Program.")
         print("-------------------------------------")
-        print("Please select an option based on what you want to do using the corresponding number.")
-        print("1. Print all package data sorted.")
-        print("2. pass.")
-        print("3. Look up a package by ID.")
+        print("Please select an option from the menu below (1-4)")
+        print("1. Look up a package by its ID. This will return the package details including delivery time.")
+        print("2. Print packages sorted by ID. This will return all package details.")
+        print("3. Print truck details. This will return all truck details.")
         print("4. Exit the program.")
             
         try:
             choice = int(input("Enter a valid number: "))
 
             if choice == 1:
-                self.printSortedPackageTable()
-            elif choice == 2:
-                pass
-            elif choice == 3:
                 try:
                     packageID = int(input("Enter the package ID you want to look up (1-40): "))
                     package = hash_table.lookUp(str(packageID))
                     if package:
                         print(package)
-                        try:
-                            choiceTwo = str(input("Would you like to lookup another package? (Y/N): "))
-                            if choiceTwo == "Y" or choiceTwo == "y":
-                                self.menu()
-                            else:
-                                print("Exiting program.")
-                                exit()
-                        except ValueError:
-                            print("Invalid input. Exiting program.")
+                        choiceTwo = str(input("Do you want to return to the main menu? (Y/N): "))
+                        if choiceTwo == "Y" or choiceTwo == "y":
+                            self.menu()
+                        elif choiceTwo == "N" or choiceTwo == "n":
+                            print("Exiting program.")
+                            exit()
+                        else:
+                            print("Exiting program.")
                             exit()
                     else:
-                        print("Package not found.")
+                        print("Package not found, returning to main menu.")
+                        self.menu()
                 except:
-                    print("Error looking up package.")
+                    print("Invalid input. Exiting program.")
+                    exit()
+
+            elif choice == 2:
+                self.printSortedPackageTable()
+
+            elif choice == 3:
+                self.printTrucks()
+
             elif choice == 4:
                 print("Exiting program.")
                 exit()
@@ -150,4 +167,5 @@ class Methods():
                 exit()
 
         except ValueError:
-            print("Please enter a valid number between 1-4.")
+            print("Invalid input. Exiting program.")
+            exit()
