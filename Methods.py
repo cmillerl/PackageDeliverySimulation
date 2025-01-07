@@ -138,23 +138,26 @@ class Methods():
     def menu(self):
         print("Welcome to the WGUPS Routing Program.")
         print("-------------------------------------")
-        print("Select an option from the menu below (1-4)")
-        print("1. Look up a package by ID number (1-40).")
-        print("2. Print packages sorted by ID number.")
-        print("3. Print truck details.")
-        print("4. Exit the program.")
+        print("Select an option from the menu below (1-5)")
+        print("1. Check all packages status by time.")
+        print("2. Look up a package by ID number (1-40).")
+        print("3. Print packages sorted by ID number.")
+        print("4. Print truck details.")
+        print("5. Exit the program.")
             
         try:
-            choice = int(input("Enter a valid number (1-4): "))
+            choice = int(input("Enter a valid number (1-5): "))
             print("\n")
 
             if choice == 1:
-                self.lookupPackage()
+                self.checkPackageStatusAtTime()
             elif choice == 2:
-                self.printSortedPackageTable()
+                self.lookupPackage()
             elif choice == 3:
-                self.printTrucks()
+                self.printSortedPackageTable()
             elif choice == 4:
+                self.printTrucks()
+            elif choice == 5:
                 print("Exiting program.")
                 exit()
             else:
@@ -164,3 +167,41 @@ class Methods():
         except ValueError:
             print("Invalid input. \n")
             self.menu()
+
+    #Checks packages status at a certain time.
+    #O(N)
+    def checkPackageStatusAtTime(self):
+        try:
+            time = input("Enter a time to check the status of all packages. (HH:MM:SS AM/PM): ")
+            timeFormat = datetime.strptime(time, "%I:%M:%S %p")
+
+            print(f"Package Status at {timeFormat.strftime('%I:%M:%S %p')}")
+            print("____________________________________________________\n")
+
+            allPackages = []
+
+            for bucket in hash_table.table:
+                if bucket != None:
+                    for key, package in bucket:
+                        try:
+                            int(package.ID)
+                            allPackages.append(package)
+                        except ValueError:
+                            pass
+        
+            sortedPackages = sorted(allPackages, key = lambda package: int(package.ID))
+
+            for package in sortedPackages:
+                for truck in self.trucks:
+                    if package in truck.packagesInTruck:
+                        if timeFormat < truck.startTime:
+                            status = "at the hub"
+                        elif not package.deliveryTime or timeFormat < package.deliveryTime:
+                            status = "en route"
+                        else:
+                            status = "delivered"
+                    
+                        print(f"Package {package.ID} is {status} at {timeFormat.strftime('%I:%M:%S %p')}")
+
+        except ValueError:
+            print("Invalid input. Exiting program. Methods.checkPackageStatusAtTime()")
