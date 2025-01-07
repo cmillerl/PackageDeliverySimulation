@@ -118,6 +118,8 @@ class Methods():
             print(Truck)
             print("\n")
 
+    #Look up a package by ID number.
+    #O(1)
     def lookupPackage(self):
         try:
             packageID = int(input("Enter the package ID you want to look up (1-40): "))
@@ -156,9 +158,9 @@ class Methods():
                 print("Exiting program.")
                 exit()
             else:
-                print("Invalid input. Returning to main menu.")
+                print("Invalid input. \n")
                 self.menu()
 
         except ValueError:
-            print("Invalid input. Returning to main menu.")
+            print("Invalid input. \n")
             self.menu()
