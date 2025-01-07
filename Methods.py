@@ -129,21 +129,22 @@ class Methods():
                 print(f"Package {packageID} not found.")
 
         except ValueError:
-            print("Invalid input. Exiting program.")
+            print("Invalid input. Exiting program. Methods.lookupPackage()")
             exit()
 
     #Main menu for user interaction.
     def menu(self):
         print("Welcome to the WGUPS Routing Program.")
         print("-------------------------------------")
-        print("Please select an option from the menu below (1-4)")
-        print("1. Look up a package by its ID. This will return the package details including delivery time.")
-        print("2. Print packages sorted by ID. This will return all package details.")
-        print("3. Print truck details. This will return all truck details.")
+        print("Select an option from the menu below (1-4)")
+        print("1. Look up a package by ID number (1-40).")
+        print("2. Print packages sorted by ID number.")
+        print("3. Print truck details.")
         print("4. Exit the program.")
             
         try:
             choice = int(input("Enter a valid number (1-4): "))
+            print("\n")
 
             if choice == 1:
                 self.lookupPackage()
