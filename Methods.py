@@ -196,12 +196,14 @@ class Methods():
                     if package in truck.packagesInTruck:
                         if timeFormat < truck.startTime:
                             status = "at the hub"
+                            print(f"Package {package.ID} is at {timeFormat.strftime('%I:%M:%S %p')}.")
                         elif not package.deliveryTime or timeFormat < package.deliveryTime:
                             status = "en route"
+                            print(f"Package {package.ID} is {status} to {package.address}, {package.city}, {package.state}, {package.zipCode} at {timeFormat.strftime('%I:%M:%S %p')}.")
                         else:
                             status = "delivered"
-                    
-                        print(f"Package {package.ID} is {status} at {timeFormat.strftime('%I:%M:%S %p')}")
+                            print(f"Package {package.ID} was delivered to {package.address}, {package.city}, {package.state}, {package.zipCode} at {package.deliveryTime.strftime('%I:%M:%S %p')}.")
+
 
         except ValueError:
             print("Invalid input. Exiting program. Methods.checkPackageStatusAtTime()")
