@@ -21,6 +21,6 @@ class Package:
                 f"Weight: {self.weightKilos}kg \n" 
                 f"Status: {self.status}\n"
                 f"Delivery Deadline: {self.deliveryDeadline}\n" 
-                f"Notes: {self.specialNotes}\n" 
                 f"Delivery Time: {self.deliveryTime.strftime('%I:%M:%S %p')}\n"
+                f"Notes: {self.specialNotes}\n" 
                 "_____________________________________________________________________________\n")

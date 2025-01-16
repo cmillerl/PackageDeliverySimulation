@@ -146,26 +146,29 @@ class Methods():
         print("5. Exit the program.")
             
         try:
-            choice = int(input("Enter a valid number (1-5): "))
-            print("\n")
+            choice = int(input("\nEnter a valid number (1-5): "))
 
             if choice == 1:
+                print("\n")
                 self.checkPackageStatusAtTime()
             elif choice == 2:
+                print("\n")
                 self.lookupPackage()
             elif choice == 3:
+                print("\n")
                 self.printSortedPackageTable()
             elif choice == 4:
+                print("\n")
                 self.printTrucks()
             elif choice == 5:
-                print("Exiting program.")
+                print("\nExiting program.\n")
                 exit()
             else:
-                print("Invalid input. \n")
+                print("\nInvalid input.\n")
                 self.menu()
 
         except ValueError:
-            print("Invalid input. \n")
+            print("\nInvalid input.\n")
             self.menu()
 
     #Checks packages status at a certain time.
@@ -196,13 +199,13 @@ class Methods():
                     if package in truck.packagesInTruck:
                         if timeFormat < truck.startTime:
                             status = "at the hub"
-                            print(f"Package {package.ID} is at {timeFormat.strftime('%I:%M:%S %p')}.")
+                            print(f"Package {package.ID}, {package.weightKilos}kg, on {truck.truckNumber.lower()} is at the hub (4001 South 700 East, Salt Lake City, UT, 84107) at {timeFormat.strftime('%I:%M:%S %p')}. The package delivery deadline is {package.deliveryDeadline}.")
                         elif not package.deliveryTime or timeFormat < package.deliveryTime:
                             status = "en route"
-                            print(f"Package {package.ID} is {status} to {package.address}, {package.city}, {package.state}, {package.zipCode} at {timeFormat.strftime('%I:%M:%S %p')}.")
+                            print(f"Package {package.ID}, {package.weightKilos}kg, on {truck.truckNumber.lower()} is {status} to {package.address}, {package.city}, {package.state}, {package.zipCode} at {timeFormat.strftime('%I:%M:%S %p')}. The package delivery deadline is {package.deliveryDeadline}.")
                         else:
                             status = "delivered"
-                            print(f"Package {package.ID} was delivered to {package.address}, {package.city}, {package.state}, {package.zipCode} at {package.deliveryTime.strftime('%I:%M:%S %p')}.")
+                            print(f"Package {package.ID}, {package.weightKilos}kg, on {truck.truckNumber.lower()} was delivered to {package.address}, {package.city}, {package.state}, {package.zipCode} at {package.deliveryTime.strftime('%I:%M:%S %p')}. The package delivery deadline was {package.deliveryDeadline}.")
 
 
         except ValueError:
