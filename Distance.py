@@ -71,6 +71,7 @@ class Distance:
                 nearestLocation.status = "Delivered"
                 self.deliveredTime = currentTime
                 undelivered.remove(nearestLocation)
+                truck.miles.append([deliveryTime, totalDistanceMiles])
                 
             if nearestLocation.deliveryDeadline != "EOD":
                 self.deadlinePackages += 1
@@ -90,12 +91,14 @@ class Distance:
         returnTime = timedelta(hours = distanceToHub / truck.AVG_SPEED)
         totalDistanceMiles += distanceToHub
         currentTime += returnTime
+        truck.miles.append([currentTime, totalDistanceMiles])
         route.append(self.startAddress)
 
         truck.totalMiles = totalDistanceMiles
         truck.returnTime = currentTime
         truck.route = route
-        print(f"Packackages Delivered: {undeliveredTwo}")
+        print(f"Packages on Truck: {', ' .join(str(package.ID) for package in truck.packagesInTruck)}")
+        print(f"Packages Delivered: {undeliveredTwo}")
         
         #Prints the amount of packages delivered on time, missed deadlines, the route, total miles, and return time.
         if self.deadlinePackages > 0:
@@ -103,7 +106,7 @@ class Distance:
             print(f"Packages delivered by deadline: {self.onTimePackages}")
             print(f"Packages missed delivery deadline: {self.offTimePackages}")
 
-        print(f"Route: {route}")
+        print(f"Route: {', '.join(route)}")
         print(f"Total Miles: {totalDistanceMiles:.2f}")
         print(f"Return Time: {currentTime.strftime('%I:%M:%S %p')}")
 

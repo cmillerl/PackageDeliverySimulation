@@ -14,6 +14,7 @@ class Package:
         self.weightKilos = weightKilos
         self.specialNotes = specialNotes
         self.status = status
+        self.truckNumber = None  
 
     def __str__(self):
         return (f"Package ID: {self.ID}\n" 
@@ -23,4 +24,5 @@ class Package:
                 f"Delivery Deadline: {self.deliveryDeadline}\n" 
                 f"Delivery Time: {self.deliveryTime.strftime('%I:%M:%S %p')}\n"
                 f"Notes: {self.specialNotes}\n" 
+                f"On Truck Number: {self.truckNumber}\n"
                 "_____________________________________________________________________________\n")

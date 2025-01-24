@@ -19,6 +19,7 @@ class Truck:
         self.totalTime = 0
         self.truckNumber = truckNumber
         self.truckStatus = self.STATUS[0]
+        self.miles = [[self.startTime, 0.0]]
 
     #Calculates the time it takes to deliver a package.
     def calculateDeliveryTime(self, distance):
@@ -32,7 +33,8 @@ class Truck:
             startTimeFormatted = self.startTime.strftime("%H:%M:%S %p")
             return(f"Truck Number: {self.truckNumber}\n"
                     f"Packages in Truck: {packageList}\n" 
-                    f"Current Location: {self.location}\n"
+                    f"Current Location: {self.location}, Salt Lake City, UT, 84107\n"
+                    f"Status: {self.truckStatus}\n"
                     f"Start Time: {startTimeFormatted}")
         except AttributeError:
             return "Error printing truck information. (Truck.__str__())"

@@ -2,6 +2,7 @@ from HashTable import *
 from ImportCSV import *
 from Truck import *
 from Distance import *
+from Package import *
 
 import_csv = ImportCSV()
 
@@ -58,13 +59,14 @@ class Methods():
             truckOne: [13,14,15,16,19,20,1,21,29,30,31,34,37],
             truckTwo: [3,6,18,25,26,28,32,36,38,39,40],
             truckThree: [2,4,5,7,8,9,10,11,12,17,22,23,24,27,33,35]}
-    
+
         for truck, package_ids in package_lists.items():
             truck.packagesInTruck = []
             for pid in package_ids:
                 package = hash_table.lookUp(str(pid))
                 if package:
                     truck.packagesInTruck.append(package)
+                    package.truckNumber = truck.truckNumber
     
         self.trucks = [truckOne, truckTwo, truckThree]
         return self.trucks
@@ -178,7 +180,7 @@ class Methods():
             time = input("Enter a time to check the status of all packages. (HH:MM:SS AM/PM): ")
             timeFormat = datetime.strptime(time, "%I:%M:%S %p")
 
-            print(f"Package Status at {timeFormat.strftime('%I:%M:%S %p')}")
+            print(f"\nPackage Status at {timeFormat.strftime('%I:%M:%S %p')}")
             print("____________________________________________________\n")
 
             allPackages = []
@@ -199,14 +201,25 @@ class Methods():
                     if package in truck.packagesInTruck:
                         if timeFormat < truck.startTime:
                             status = "at the hub"
-                            print(f"Package {package.ID}, {package.weightKilos}kg, on {truck.truckNumber.lower()} is at the hub (4001 South 700 East, Salt Lake City, UT, 84107) at {timeFormat.strftime('%I:%M:%S %p')}. The package delivery deadline is {package.deliveryDeadline}.")
+                            print(f"Package {package.ID}, {package.weightKilos}kg, on {truck.truckNumber.lower()} is at the hub (4001 South 700 East, Salt Lake City, UT, 84107) at {timeFormat.strftime('%I:%M:%S %p')}. Package {package.ID} will be delivered to {package.address}, {package.city}, {package.state}, {package.zipCode} and the delivery deadline is {package.deliveryDeadline}.")
                         elif not package.deliveryTime or timeFormat < package.deliveryTime:
                             status = "en route"
                             print(f"Package {package.ID}, {package.weightKilos}kg, on {truck.truckNumber.lower()} is {status} to {package.address}, {package.city}, {package.state}, {package.zipCode} at {timeFormat.strftime('%I:%M:%S %p')}. The package delivery deadline is {package.deliveryDeadline}.")
                         else:
                             status = "delivered"
                             print(f"Package {package.ID}, {package.weightKilos}kg, on {truck.truckNumber.lower()} was delivered to {package.address}, {package.city}, {package.state}, {package.zipCode} at {package.deliveryTime.strftime('%I:%M:%S %p')}. The package delivery deadline was {package.deliveryDeadline}.")
-
+            
+            print("\nTruck Mileage")
+            print("_____________\n")
+            combinedMiles = 0
+            for truck in self.trucks:
+                    milesTraveled = 0
+                    for deliveryTime, miles in truck.miles:
+                        if timeFormat >= deliveryTime:
+                            milesTraveled = miles
+                    print(f"{truck.truckNumber} has traveled {milesTraveled:.2f} miles at {timeFormat.strftime('%I:%M:%S %p')}.")
+                    combinedMiles += milesTraveled
+            print(f"The combined mileage of all trucks at {timeFormat.strftime('%I:%M:%S %p')} is {combinedMiles:.2f} miles.\n")
 
         except ValueError:
             print("Invalid input. Exiting program. Methods.checkPackageStatusAtTime()")
