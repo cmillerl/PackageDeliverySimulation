@@ -81,6 +81,15 @@ class Methods():
                 print("\n" + truck.truckNumber)
                 print("----------")
                 print(f"Depature Time: {truck.startTime.strftime('%I:%M:%S %p')}")
+
+                if truck.startTime >= datetime.strptime("10:20:00 AM", "%I:%M:%S %p"):
+                    packageNine = hash_table.lookUp("9")
+                    if packageNine:
+                        packageNine.address = "410 S State St"
+                        packageNine.city = "Salt Lake City"
+                        packageNine.state = "UT"
+                        packageNine.zipCode = "84111"
+
                 self.distance_class.optimalRoute(truck)
                 self.total_miles += truck.totalMiles
 
@@ -199,6 +208,22 @@ class Methods():
             for package in sortedPackages:
                 for truck in self.trucks:
                     if package in truck.packagesInTruck:
+
+                        if timeFormat < datetime.strptime("10:20:00 AM", "%I:%M:%S %p"):
+                            packageNine = hash_table.lookUp("9")
+                            if packageNine:
+                                packageNine.address = "300 State St"
+                                packageNine.city = "Salt Lake City"
+                                packageNine.state = "UT"
+                                packageNine.zipCode = "84103"
+                        else:
+                            packageNine = hash_table.lookUp("9")
+                            if packageNine:
+                                packageNine.address = "410 S State St"
+                                packageNine.city = "Salt Lake City"
+                                packageNine.state = "UT"
+                                packageNine.zipCode = "84111"
+
                         if timeFormat < truck.startTime:
                             status = "at the hub"
                             print(f"Package {package.ID}, {package.weightKilos}kg, on {truck.truckNumber.lower()} is at the hub (4001 South 700 East, Salt Lake City, UT, 84107) at {timeFormat.strftime('%I:%M:%S %p')}. Package {package.ID} will be delivered to {package.address}, {package.city}, {package.state}, {package.zipCode} and the delivery deadline is {package.deliveryDeadline}.")
